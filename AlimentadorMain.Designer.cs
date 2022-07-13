@@ -28,61 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BtnConectar = new System.Windows.Forms.Button();
-            this.comboBoxPortas = new System.Windows.Forms.ComboBox();
-            this.groupBoxStatus = new System.Windows.Forms.GroupBox();
-            this.groupBoxStatus.SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripLabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerAtualizarDados = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.timerChecarConexao = new System.Windows.Forms.Timer(this.components);
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // BtnConectar
+            // statusStrip1
             // 
-            this.BtnConectar.Location = new System.Drawing.Point(44, 66);
-            this.BtnConectar.Name = "BtnConectar";
-            this.BtnConectar.Size = new System.Drawing.Size(100, 23);
-            this.BtnConectar.TabIndex = 0;
-            this.BtnConectar.Text = "Conectar";
-            this.BtnConectar.UseVisualStyleBackColor = true;
-            this.BtnConectar.Click += new System.EventHandler(this.BtnConectar_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 391);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(658, 22);
+            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Text = "statusStrip";
             // 
-            // comboBoxPortas
+            // toolStripLabelStatus
             // 
-            this.comboBoxPortas.FormattingEnabled = true;
-            this.comboBoxPortas.Location = new System.Drawing.Point(33, 37);
-            this.comboBoxPortas.Name = "comboBoxPortas";
-            this.comboBoxPortas.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxPortas.TabIndex = 1;
-            this.comboBoxPortas.DropDown += new System.EventHandler(this.Portas_DropDown);
+            this.toolStripLabelStatus.Name = "toolStripLabelStatus";
+            this.toolStripLabelStatus.Size = new System.Drawing.Size(103, 17);
+            this.toolStripLabelStatus.Text = "Status Dispositivo:";
             // 
-            // groupBoxStatus
+            // timerAtualizarDados
             // 
-            this.groupBoxStatus.BackColor = System.Drawing.SystemColors.Menu;
-            this.groupBoxStatus.Controls.Add(this.comboBoxPortas);
-            this.groupBoxStatus.Controls.Add(this.BtnConectar);
-            this.groupBoxStatus.Location = new System.Drawing.Point(13, 38);
-            this.groupBoxStatus.Name = "groupBoxStatus";
-            this.groupBoxStatus.Size = new System.Drawing.Size(184, 119);
-            this.groupBoxStatus.TabIndex = 2;
-            this.groupBoxStatus.TabStop = false;
-            this.groupBoxStatus.Text = "Status Alimentador";
+            this.timerAtualizarDados.Interval = 1000;
+            this.timerAtualizarDados.Tick += new System.EventHandler(this.timerAtualizarDados_Tick);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(86, 105);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(277, 86);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // timerChecarConexao
+            // 
+            this.timerChecarConexao.Tick += new System.EventHandler(this.timerChecarConexao_Tick);
             // 
             // AlimentadorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(898, 533);
-            this.Controls.Add(this.groupBoxStatus);
+            this.ClientSize = new System.Drawing.Size(658, 413);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.statusStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AlimentadorMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AlimentadorMain";
-            this.Load += new System.EventHandler(this.AlimentadorMain_Load);
-            this.groupBoxStatus.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private Button BtnConectar;
-        private ComboBox comboBoxPortas;
-        private GroupBox groupBoxStatus;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripLabelStatus;
+        private System.Windows.Forms.Timer timerAtualizarDados;
+        private Label label1;
+        private System.Windows.Forms.Timer timerChecarConexao;
     }
 }

@@ -1,82 +1,89 @@
-﻿using System.IO.Ports;
+﻿using System;
+using System.IO.Ports;
+using System.Xml.Linq;
 
 namespace Alimentador
 {
     public partial class AlimentadorMain : Form
     {
-
         static SerialPort _serialPort;
-        public AlimentadorMain()
+
+        public AlimentadorMain(SerialPort serialPort)
         {
             InitializeComponent();
-            _serialPort = new SerialPort();
-            _serialPort.BaudRate = 9600;
-            comboBoxPortas.Items.Clear();
+            _serialPort = serialPort;
+            _serialPort.DataReceived += _serialPort_DataReceived;
+            _serialPort.ReadTimeout = 2000;
+            _serialPort.WriteTimeout = 500;
+
+            timerChecarConexao.Interval = 100;
+            timerChecarConexao.Start();
+            timerAtualizarDados.Interval = 300;
+            timerAtualizarDados.Start();
+
         }
 
-        private void AlimentadorMain_Load(object sender, EventArgs e)
+        private void Desconectado()
         {
-
+            MessageBox.Show("Desconectado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            this.Hide();
+            FormCOMConectar serialConectar = new FormCOMConectar();
+            serialConectar.Closed += (s, args) => this.Close();
+            serialConectar.Show();
         }
 
-        private void Portas_DropDown(object sender, EventArgs e)
+        private void tratarSerialRecebido(string dadosEntradaSerial)
         {
-            comboBoxPortas.Items.Clear();
-            string[] portas = SerialPort.GetPortNames();
+            label1.Text = dadosEntradaSerial;
+        }
 
-            if (portas.Length>0)
+        private void timerChecarConexao_Tick(object sender, EventArgs e)
+        {
+            if (_serialPort.IsOpen)
             {
-                foreach (string porta in portas)
-                {
+                toolStripLabelStatus.Text = "Status Dispositivo:" + "OK";
+            }
+            else
+            {
+                toolStripLabelStatus.Text = "Status Dispositivo:" + "Desconectado";
+                timerChecarConexao.Stop();
+                Desconectado();
+            }
+        }
+        private void _serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string dadosEntradaSerial = "";
+            SerialPort sp = (SerialPort)sender;
+            dadosEntradaSerial = sp.ReadLine();
+            EventHandler myEvent = (sender, e) => tratarSerialRecebido(dadosEntradaSerial);
+            try { 
+            this.Invoke(myEvent);
+            }
+            catch
+            {
+                return;
+            }
+        }
 
-                    comboBoxPortas.Items.Add(porta);
+        private void timerAtualizarDados_Tick(object sender, EventArgs e)
+        {
+            if (_serialPort.IsOpen)
+            {
+                try
+                {
+                    string send = "{\"tipo_msg\""+":9}";
+                    _serialPort.WriteLine(send);
+                }
+                catch
+                {
+                    timerAtualizarDados.Stop();
+                    MessageBox.Show("Erro", "Erro", MessageBoxButtons.OK);
+                    Desconectado();
                 }
             }
             else
             {
-                MessageBox.Show("Conecte o Dispositivo.", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void BtnConectar_Click(object sender, EventArgs e)
-        {
-            if (_serialPort.IsOpen == false)
-            {
-                try
-                {
-                    string? porta = comboBoxPortas.Items[comboBoxPortas.SelectedIndex].ToString();
-                    if (!String.IsNullOrEmpty(porta))
-                    {
-                        _serialPort.PortName = porta;
-                        _serialPort.Open();
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Erro na Conexão", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (_serialPort.IsOpen)
-                {
-                    BtnConectar.Text = "Desconectar";
-                    comboBoxPortas.Enabled = false;
-                }
-            }
-            else
-            {
-
-                try
-                {
-                    _serialPort.Close();
-                    comboBoxPortas.Enabled = true;
-                    BtnConectar.Text = "Conectar";
-                }
-                catch
-                {
-                    MessageBox.Show("Erro na Desconexão", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
+                timerAtualizarDados.Stop();
             }
         }
     }
