@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Alimentador.MensagensJson;
 using System.IO.Ports;
-using System.Xml.Linq;
+using System.Text.Json;
+using static Alimentador.MensagensJson.ServicoMensagens;
 
 namespace Alimentador
 {
@@ -32,22 +33,77 @@ namespace Alimentador
             serialConectar.Show();
         }
 
-        private void tratarSerialRecebido(string dadosEntradaSerial)
+        private void tratarSerialRecebido(string dadosRecebidos)
         {
-            label1.Text = dadosEntradaSerial;
+            ServicoMensagens servicoMensagens = new ServicoMensagens(dadosRecebidos);
+            TIPODARESPOSTA resposta = servicoMensagens.TipoMensagemRecebida();
+
+            switch (resposta)
+            {
+                case TIPODARESPOSTA.ERRO:
+
+                    break;
+                case TIPODARESPOSTA.HORARIOALIMENTACAO:                                                                
+                    break;
+                case TIPODARESPOSTA.NMAXID:
+                    int? maxId = servicoMensagens.RetornarValorDeJson<int>();
+                    
+                    break;
+                case TIPODARESPOSTA.HORARIOALIMENTADOR:
+                    HorarioAlimentacao horario;
+                    horario = servicoMensagens.RetornarValorDeJson<HorarioAlimentacao>();
+                    label1.Text = horario.Hora.ToString();
+                    break;
+                case TIPODARESPOSTA.TENSAOLDR:
+
+                    break;
+                case TIPODARESPOSTA.STATUSLED:
+
+                    break;
+                case TIPODARESPOSTA.STATUSCONEXAO:
+
+                    break;
+                case TIPODARESPOSTA.MENSAGEMINVALIDA:
+
+                    break;
+                default:
+                    break;
+            }
         }
+        
 
         private void timerChecarConexao_Tick(object sender, EventArgs e)
         {
             if (_serialPort.IsOpen)
             {
-                toolStripLabelStatus.Text = "Status Dispositivo:" + "OK";
+                toolStripLabelStatus.Text = "Status Dispositivo:" + "Conecntado";
             }
             else
             {
                 toolStripLabelStatus.Text = "Status Dispositivo:" + "Desconectado";
                 timerChecarConexao.Stop();
                 Desconectado();
+            }
+        }
+        private void timerAtualizarDados_Tick(object sender, EventArgs e)
+        {
+            if (_serialPort.IsOpen)
+            {
+                try
+                {
+                    string send = "{\"tipo_msg\"" + ":2,\"id\"" + ":1}";
+                    _serialPort.WriteLine(send);
+                }
+                catch
+                {
+                    timerAtualizarDados.Stop();
+                    MessageBox.Show("Erro", "Erro", MessageBoxButtons.OK);
+                    Desconectado();
+                }
+            }
+            else
+            {
+                timerAtualizarDados.Stop();
             }
         }
         private void _serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -65,26 +121,6 @@ namespace Alimentador
             }
         }
 
-        private void timerAtualizarDados_Tick(object sender, EventArgs e)
-        {
-            if (_serialPort.IsOpen)
-            {
-                try
-                {
-                    string send = "{\"tipo_msg\""+":9}";
-                    _serialPort.WriteLine(send);
-                }
-                catch
-                {
-                    timerAtualizarDados.Stop();
-                    MessageBox.Show("Erro", "Erro", MessageBoxButtons.OK);
-                    Desconectado();
-                }
-            }
-            else
-            {
-                timerAtualizarDados.Stop();
-            }
-        }
+       
     }
 }
