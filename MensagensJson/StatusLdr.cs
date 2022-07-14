@@ -13,5 +13,8 @@ namespace Alimentador.MensagensJson
 
         [JsonProperty("tensao_ldr")]
         public double TensaoLdr { get; set; }
+
+        [JsonProperty("limite_ldr")]
+        public double LimiteAcionamento { get; set; }
     }
 }

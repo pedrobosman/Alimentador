@@ -35,9 +35,10 @@
             // 
             // BtnConectar
             // 
-            this.BtnConectar.Location = new System.Drawing.Point(54, 100);
+            this.BtnConectar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.BtnConectar.Location = new System.Drawing.Point(90, 111);
             this.BtnConectar.Name = "BtnConectar";
-            this.BtnConectar.Size = new System.Drawing.Size(100, 23);
+            this.BtnConectar.Size = new System.Drawing.Size(82, 25);
             this.BtnConectar.TabIndex = 0;
             this.BtnConectar.Text = "Conectar";
             this.BtnConectar.UseVisualStyleBackColor = true;
@@ -45,28 +46,32 @@
             // 
             // comboBoxPortas
             // 
+            this.comboBoxPortas.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.comboBoxPortas.FormattingEnabled = true;
-            this.comboBoxPortas.Location = new System.Drawing.Point(43, 71);
+            this.comboBoxPortas.Location = new System.Drawing.Point(51, 71);
             this.comboBoxPortas.Name = "comboBoxPortas";
-            this.comboBoxPortas.Size = new System.Drawing.Size(121, 23);
+            this.comboBoxPortas.Size = new System.Drawing.Size(166, 23);
             this.comboBoxPortas.Sorted = true;
             this.comboBoxPortas.TabIndex = 1;
             this.comboBoxPortas.DropDown += new System.EventHandler(this.Portas_DropDown);
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 29);
+            this.label1.Location = new System.Drawing.Point(73, 38);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Selecione o Dispositivo";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormCOMConectar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(219, 155);
+            this.ClientSize = new System.Drawing.Size(269, 172);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxPortas);
             this.Controls.Add(this.BtnConectar);

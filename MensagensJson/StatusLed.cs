@@ -11,7 +11,7 @@ namespace Alimentador.MensagensJson
     public class StatusLed
     {
         [JsonProperty("led_status")]
-        public bool LedStatus { get; set; }
+        public bool EstaLigado { get; set; }
 
         [JsonProperty("porcentagem")]
         public int Porcentagem { get; set; }
