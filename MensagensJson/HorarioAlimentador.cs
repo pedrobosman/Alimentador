@@ -1,21 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
+
 using System.Threading.Tasks;
 
 namespace Alimentador.MensagensJson
 {
-    public class HorarioArduino
+    public class HorarioAlimentador
     {
-        [JsonPropertyName("hora")]
+        [JsonProperty("hora")]
         public int Hora { get; set; }
 
-        [JsonPropertyName("minuto")]
+        [JsonProperty("minuto")]
         public int Minuto { get; set; }
 
-        [JsonPropertyName("segundo")]
+        [JsonProperty("segundo")]
         public int Segundo { get; set; }
     }
 }

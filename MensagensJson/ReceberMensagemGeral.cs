@@ -1,28 +1,29 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+
+
 
 namespace Alimentador.MensagensJson
 {
     public class ReceberMensagemGeral
     {
-        [JsonPropertyName("erro")]
+        [JsonProperty("erro")]
         public string? Erro { get; set; }
 
-        [JsonPropertyName("nmax_id")]
+        [JsonProperty("nmax_id")]
         public int NMaxId { get; set; }
 
         
 
-        [JsonPropertyName("led_status")]
+        [JsonProperty("led_status")]
         public bool LedStatus { get; set; }
 
-        [JsonPropertyName("porcentagem")]
+        [JsonProperty("porcentagem")]
         public int Porcentagem { get; set; }
 
-        [JsonPropertyName("tensao_ldr")]
+        [JsonProperty("tensao_ldr")]
         public double TensaoLdr { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string? Status { get; set; }
 
     }

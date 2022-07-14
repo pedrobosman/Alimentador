@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
+
 using System.Threading.Tasks;
 
 namespace Alimentador.MensagensJson
 {
-    public class StatusLDR
+    public class StatusLdr
     {
 
-
-        [JsonPropertyName("tensao_ldr")]
+        [JsonProperty("tensao_ldr")]
         public double TensaoLdr { get; set; }
     }
 }

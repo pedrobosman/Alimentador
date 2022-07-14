@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace Alimentador.MensagensJson
 {
@@ -17,7 +12,14 @@ namespace Alimentador.MensagensJson
        
        public T? RetornarValorDeJson<T>()
         {
-            return JsonSerializer.Deserialize<T>(_dadosRecebidos);
+            try { 
+                return JsonConvert.DeserializeObject<T>(_dadosRecebidos);
+            }
+            catch
+            {
+                return default(T);
+            }
+                //JsonSerializer.Deserialize<T>(_dadosRecebidos);
         }
 
 
@@ -36,8 +38,8 @@ namespace Alimentador.MensagensJson
         public TIPODARESPOSTA TipoMensagemRecebida()
         {
             TIPODARESPOSTA tipo = TIPODARESPOSTA.MENSAGEMINVALIDA;
-            string[] msg = {"erro", "id","nmax_id","hora"
-                    ,"tensao_ldr","led_status","status"};
+            string[] msg = {"\"erro\"", "\"id\"","\"nmax_id\"","\"hora\""
+                    ,"\"tensao_ldr\"","\"led_status\"","\"status\""};
             for (int i = 0; i < msg.Length; i++)
             {
                 if (_dadosRecebidos.Contains(msg[i]))
@@ -45,6 +47,13 @@ namespace Alimentador.MensagensJson
                     tipo = (TIPODARESPOSTA)i;
                 }
             }
+
+            if (tipo == TIPODARESPOSTA.HORARIOALIMENTADOR)
+            {
+                tipo = (_dadosRecebidos.Contains(msg[1])) 
+                    ? TIPODARESPOSTA.HORARIOALIMENTACAO : TIPODARESPOSTA.HORARIOALIMENTADOR;
+            }
+
             return tipo;
 
         }

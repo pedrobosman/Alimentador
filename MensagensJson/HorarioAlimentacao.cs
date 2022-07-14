@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Alimentador.MensagensJson
@@ -11,22 +10,22 @@ namespace Alimentador.MensagensJson
 
     public class HorarioAlimentacao
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int ID { get; set; }
 
-        [JsonPropertyName("hora")]
+        [JsonProperty("hora")]
         public int Hora { get; set; }
 
-        [JsonPropertyName("minuto")]
+        [JsonProperty("minuto")]
         public int Minuto { get; set; }
 
-        [JsonPropertyName("segundo")]
+        [JsonProperty("segundo")]
         public int Segundo { get; set; }
 
-        [JsonPropertyName("tempo_vazao_ms")]
-        public int TempoVazao { get; set; }
+        [JsonProperty("tempo_vazao_ms")]
+        public double TempoVazao { get; set; }
 
-        [JsonPropertyName("ja_alimentou")]
+        [JsonProperty("ja_alimentou")]
         public bool JaAlimentou { get; set; }
 
     }

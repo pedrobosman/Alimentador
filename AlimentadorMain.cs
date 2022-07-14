@@ -24,6 +24,7 @@ namespace Alimentador
 
         }
 
+
         private void Desconectado()
         {
             MessageBox.Show("Desconectado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -33,50 +34,11 @@ namespace Alimentador
             serialConectar.Show();
         }
 
-        private void tratarSerialRecebido(string dadosRecebidos)
-        {
-            ServicoMensagens servicoMensagens = new ServicoMensagens(dadosRecebidos);
-            TIPODARESPOSTA resposta = servicoMensagens.TipoMensagemRecebida();
-
-            switch (resposta)
-            {
-                case TIPODARESPOSTA.ERRO:
-
-                    break;
-                case TIPODARESPOSTA.HORARIOALIMENTACAO:                                                                
-                    break;
-                case TIPODARESPOSTA.NMAXID:
-                    int? maxId = servicoMensagens.RetornarValorDeJson<int>();
-                    
-                    break;
-                case TIPODARESPOSTA.HORARIOALIMENTADOR:
-                    HorarioAlimentacao horario;
-                    horario = servicoMensagens.RetornarValorDeJson<HorarioAlimentacao>();
-                    label1.Text = horario.Hora.ToString();
-                    break;
-                case TIPODARESPOSTA.TENSAOLDR:
-
-                    break;
-                case TIPODARESPOSTA.STATUSLED:
-
-                    break;
-                case TIPODARESPOSTA.STATUSCONEXAO:
-
-                    break;
-                case TIPODARESPOSTA.MENSAGEMINVALIDA:
-
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-
         private void timerChecarConexao_Tick(object sender, EventArgs e)
         {
             if (_serialPort.IsOpen)
             {
-                toolStripLabelStatus.Text = "Status Dispositivo:" + "Conecntado";
+                toolStripLabelStatus.Text = "Status Dispositivo:" + "Conectado";
             }
             else
             {
@@ -91,7 +53,8 @@ namespace Alimentador
             {
                 try
                 {
-                    string send = "{\"tipo_msg\"" + ":2,\"id\"" + ":1}";
+                    string send = "{\"tipo_msg\"" +
+                        ":10}";
                     _serialPort.WriteLine(send);
                 }
                 catch
@@ -104,6 +67,65 @@ namespace Alimentador
             else
             {
                 timerAtualizarDados.Stop();
+            }
+        }
+
+        private void tratarSerialRecebido(string dadosRecebidos)
+        {
+            ServicoMensagens servicoMensagens = new ServicoMensagens(dadosRecebidos);
+            TIPODARESPOSTA resposta = servicoMensagens.TipoMensagemRecebida();
+
+            switch (resposta)
+            {
+                case TIPODARESPOSTA.ERRO:
+                    MsgErro? erro = servicoMensagens.RetornarValorDeJson<MsgErro>();
+                    if (erro == null) break;
+                    if (erro.Mensagem == "id_errado")
+                    {
+                        MessageBox.Show("Verifique o ID de alimentação!",
+                            "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    break;
+                case TIPODARESPOSTA.HORARIOALIMENTACAO:
+                    HorarioAlimentacao? horarioAlimentacao
+                        = servicoMensagens.RetornarValorDeJson<HorarioAlimentacao>();
+                    if (horarioAlimentacao == null) break;
+
+
+                    break;
+                case TIPODARESPOSTA.NMAXID:
+                    NMaxId? maxId =
+                        servicoMensagens.RetornarValorDeJson<NMaxId>();
+                    if (maxId == null) break;
+
+                    break;
+                case TIPODARESPOSTA.HORARIOALIMENTADOR:
+                    HorarioAlimentador? horarioDispositivo =
+                        servicoMensagens.RetornarValorDeJson<HorarioAlimentador>();
+                    if (horarioDispositivo == null) break;
+
+                    break;
+                case TIPODARESPOSTA.TENSAOLDR:
+                    StatusLdr? ldr_Status = servicoMensagens.RetornarValorDeJson<StatusLdr>();
+                    if (ldr_Status == null) break;
+
+                    break;
+                case TIPODARESPOSTA.STATUSLED:
+                    StatusLed? led_Status = servicoMensagens.RetornarValorDeJson<StatusLed>();
+                    if (led_Status == null) break;
+
+                    break;
+                case TIPODARESPOSTA.STATUSCONEXAO:
+                    StatusAlimentador? statusAlimentador
+                        = servicoMensagens.RetornarValorDeJson<StatusAlimentador>();
+                    if (statusAlimentador == null) break;
+
+                    break;
+                case TIPODARESPOSTA.MENSAGEMINVALIDA:
+
+                    break;
+                default:
+                    break;
             }
         }
         private void _serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -121,6 +143,6 @@ namespace Alimentador
             }
         }
 
-       
+        
     }
 }

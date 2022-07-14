@@ -1,10 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+
 
 namespace Alimentador.MensagensJson
 {
     public class StatusAlimentador
     {
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string? Status { get; set; }
     }
 }

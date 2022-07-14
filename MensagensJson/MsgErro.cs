@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace Alimentador.MensagensJson
 {
     public class MsgErro
     {
-        [JsonPropertyName("erro")]
-        public string? Erro { get; set; }
+        [JsonProperty("erro")]
+        public string? Mensagem { get; set; }
     }
 }
