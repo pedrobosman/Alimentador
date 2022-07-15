@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripLabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerAtualizarDados = new System.Windows.Forms.Timer(this.components);
             this.timerChecarConexao = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxIlumincacao = new System.Windows.Forms.GroupBox();
             this.labelPorcLuminosidade = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -48,30 +48,25 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBarPorcLampada = new System.Windows.Forms.TrackBar();
-            this.statusStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.statusLedBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonRemoveHorario = new System.Windows.Forms.Button();
+            this.buttonRecarregarHorario = new System.Windows.Forms.Button();
+            this.buttonAdicionarHorairo = new System.Windows.Forms.Button();
+            this.dataGridViewAlimentacao = new System.Windows.Forms.DataGridView();
+            this.ID_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hora_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Minuto_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TempoVazao_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.JaAlimentou_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBoxIlumincacao.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLampada)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPorcLampada)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusLedBindingSource)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAlimentacao)).BeginInit();
             this.SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 475);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(868, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip";
-            // 
-            // toolStripLabelStatus
-            // 
-            this.toolStripLabelStatus.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.toolStripLabelStatus.Name = "toolStripLabelStatus";
-            this.toolStripLabelStatus.Size = new System.Drawing.Size(103, 17);
-            this.toolStripLabelStatus.Text = "Status Dispositivo:";
             // 
             // timerAtualizarDados
             // 
@@ -82,29 +77,29 @@
             // 
             this.timerChecarConexao.Tick += new System.EventHandler(this.timerChecarConexao_Tick);
             // 
-            // groupBox1
+            // groupBoxIlumincacao
             // 
-            this.groupBox1.Controls.Add(this.labelPorcLuminosidade);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.pictureBoxLampada);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.trackBarAmbiente);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.trackBarPorcLampada);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox1.Location = new System.Drawing.Point(432, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(424, 267);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Iluminação";
+            this.groupBoxIlumincacao.Controls.Add(this.labelPorcLuminosidade);
+            this.groupBoxIlumincacao.Controls.Add(this.label5);
+            this.groupBoxIlumincacao.Controls.Add(this.label10);
+            this.groupBoxIlumincacao.Controls.Add(this.pictureBoxLampada);
+            this.groupBoxIlumincacao.Controls.Add(this.label9);
+            this.groupBoxIlumincacao.Controls.Add(this.label8);
+            this.groupBoxIlumincacao.Controls.Add(this.label7);
+            this.groupBoxIlumincacao.Controls.Add(this.label6);
+            this.groupBoxIlumincacao.Controls.Add(this.label4);
+            this.groupBoxIlumincacao.Controls.Add(this.label3);
+            this.groupBoxIlumincacao.Controls.Add(this.trackBarAmbiente);
+            this.groupBoxIlumincacao.Controls.Add(this.label2);
+            this.groupBoxIlumincacao.Controls.Add(this.label1);
+            this.groupBoxIlumincacao.Controls.Add(this.trackBarPorcLampada);
+            this.groupBoxIlumincacao.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBoxIlumincacao.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxIlumincacao.Name = "groupBoxIlumincacao";
+            this.groupBoxIlumincacao.Size = new System.Drawing.Size(424, 298);
+            this.groupBoxIlumincacao.TabIndex = 1;
+            this.groupBoxIlumincacao.TabStop = false;
+            this.groupBoxIlumincacao.Text = "Iluminação";
             // 
             // labelPorcLuminosidade
             // 
@@ -207,8 +202,6 @@
             this.trackBarAmbiente.Size = new System.Drawing.Size(217, 45);
             this.trackBarAmbiente.TabIndex = 3;
             this.trackBarAmbiente.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarAmbiente.Scroll += new System.EventHandler(this.trackBarAmbiente_Scroll);
-            this.trackBarAmbiente.Enter += new System.EventHandler(this.trackBarAmbiente_Enter);
             this.trackBarAmbiente.MouseCaptureChanged += new System.EventHandler(this.trackBarAmbiente_MouseCaptureChanged);
             // 
             // label2
@@ -231,6 +224,7 @@
             // 
             // trackBarPorcLampada
             // 
+            this.trackBarPorcLampada.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.statusLedBindingSource, "Porcentagem", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.trackBarPorcLampada.LargeChange = 20;
             this.trackBarPorcLampada.Location = new System.Drawing.Point(25, 77);
             this.trackBarPorcLampada.Maximum = 100;
@@ -239,31 +233,150 @@
             this.trackBarPorcLampada.SmallChange = 10;
             this.trackBarPorcLampada.TabIndex = 0;
             this.trackBarPorcLampada.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarPorcLampada.Scroll += new System.EventHandler(this.trackBarPorcLampada_Scroll);
-            this.trackBarPorcLampada.Enter += new System.EventHandler(this.trackBarPorcLampada_Enter);
             this.trackBarPorcLampada.MouseCaptureChanged += new System.EventHandler(this.trackBarPorcLampada_MouseCaptureChanged);
+            // 
+            // statusLedBindingSource
+            // 
+            this.statusLedBindingSource.DataSource = typeof(Alimentador.MensagensJson.StatusLed);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonRemoveHorario);
+            this.groupBox2.Controls.Add(this.buttonAdicionarHorairo);
+            this.groupBox2.Controls.Add(this.dataGridViewAlimentacao);
+            this.groupBox2.Location = new System.Drawing.Point(442, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(570, 298);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Horários de Alimentação";
+            // 
+            // buttonRemoveHorario
+            // 
+            this.buttonRemoveHorario.BackgroundImage = global::Alimentador.Properties.Resources.remove;
+            this.buttonRemoveHorario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonRemoveHorario.Location = new System.Drawing.Point(469, 238);
+            this.buttonRemoveHorario.Name = "buttonRemoveHorario";
+            this.buttonRemoveHorario.Size = new System.Drawing.Size(40, 40);
+            this.buttonRemoveHorario.TabIndex = 3;
+            this.buttonRemoveHorario.UseVisualStyleBackColor = true;
+            this.buttonRemoveHorario.Click += new System.EventHandler(this.buttonRemoveHorario_Click);
+            // 
+            // buttonRecarregarHorario
+            // 
+            this.buttonRecarregarHorario.BackgroundImage = global::Alimentador.Properties.Resources.reload;
+            this.buttonRecarregarHorario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonRecarregarHorario.Location = new System.Drawing.Point(957, 345);
+            this.buttonRecarregarHorario.Name = "buttonRecarregarHorario";
+            this.buttonRecarregarHorario.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.buttonRecarregarHorario.Size = new System.Drawing.Size(40, 40);
+            this.buttonRecarregarHorario.TabIndex = 2;
+            this.buttonRecarregarHorario.UseVisualStyleBackColor = true;
+            this.buttonRecarregarHorario.Click += new System.EventHandler(this.buttonRecarregarHorario_Click);
+            // 
+            // buttonAdicionarHorairo
+            // 
+            this.buttonAdicionarHorairo.BackgroundImage = global::Alimentador.Properties.Resources.add;
+            this.buttonAdicionarHorairo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAdicionarHorairo.Location = new System.Drawing.Point(515, 238);
+            this.buttonAdicionarHorairo.Name = "buttonAdicionarHorairo";
+            this.buttonAdicionarHorairo.Size = new System.Drawing.Size(40, 40);
+            this.buttonAdicionarHorairo.TabIndex = 1;
+            this.buttonAdicionarHorairo.UseVisualStyleBackColor = true;
+            this.buttonAdicionarHorairo.Click += new System.EventHandler(this.buttonAdicionarHorairo_Click);
+            // 
+            // dataGridViewAlimentacao
+            // 
+            this.dataGridViewAlimentacao.AllowUserToAddRows = false;
+            this.dataGridViewAlimentacao.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewAlimentacao.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridViewAlimentacao.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
+            this.dataGridViewAlimentacao.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridViewAlimentacao.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dataGridViewAlimentacao.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewAlimentacao.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewAlimentacao.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewAlimentacao.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID_Column,
+            this.Hora_Column,
+            this.Minuto_Column,
+            this.TempoVazao_Column,
+            this.JaAlimentou_Column});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewAlimentacao.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewAlimentacao.Location = new System.Drawing.Point(6, 22);
+            this.dataGridViewAlimentacao.Name = "dataGridViewAlimentacao";
+            this.dataGridViewAlimentacao.ReadOnly = true;
+            this.dataGridViewAlimentacao.RowTemplate.Height = 25;
+            this.dataGridViewAlimentacao.Size = new System.Drawing.Size(558, 210);
+            this.dataGridViewAlimentacao.TabIndex = 0;
+            // 
+            // ID_Column
+            // 
+            this.ID_Column.HeaderText = "ID";
+            this.ID_Column.Name = "ID_Column";
+            this.ID_Column.ReadOnly = true;
+            // 
+            // Hora_Column
+            // 
+            this.Hora_Column.HeaderText = "Hora";
+            this.Hora_Column.Name = "Hora_Column";
+            this.Hora_Column.ReadOnly = true;
+            // 
+            // Minuto_Column
+            // 
+            this.Minuto_Column.HeaderText = "Minuto";
+            this.Minuto_Column.Name = "Minuto_Column";
+            this.Minuto_Column.ReadOnly = true;
+            // 
+            // TempoVazao_Column
+            // 
+            this.TempoVazao_Column.HeaderText = "Tempo de Vazão (s)";
+            this.TempoVazao_Column.Name = "TempoVazao_Column";
+            this.TempoVazao_Column.ReadOnly = true;
+            // 
+            // JaAlimentou_Column
+            // 
+            this.JaAlimentou_Column.HeaderText = "Ja Alimentou?";
+            this.JaAlimentou_Column.Name = "JaAlimentou_Column";
+            this.JaAlimentou_Column.ReadOnly = true;
             // 
             // AlimentadorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Green;
-            this.ClientSize = new System.Drawing.Size(868, 497);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.statusStrip1);
+            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.ClientSize = new System.Drawing.Size(1009, 397);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.buttonRecarregarHorario);
+            this.Controls.Add(this.groupBoxIlumincacao);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AlimentadorMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AlimentadorMain";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Text = " ";
+            this.Load += new System.EventHandler(this.AlimentadorMain_Load);
+            this.groupBoxIlumincacao.ResumeLayout(false);
+            this.groupBoxIlumincacao.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLampada)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPorcLampada)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusLedBindingSource)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAlimentacao)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -273,7 +386,7 @@
         private ToolStripStatusLabel toolStripLabelStatus;
         private System.Windows.Forms.Timer timerAtualizarDados;
         private System.Windows.Forms.Timer timerChecarConexao;
-        private GroupBox groupBox1;
+        private GroupBox groupBoxIlumincacao;
         private Label label2;
         private Label label1;
         private TrackBar trackBarPorcLampada;
@@ -288,5 +401,16 @@
         private Label label5;
         private Label label10;
         private Label labelPorcLuminosidade;
+        private BindingSource statusLedBindingSource;
+        private GroupBox groupBox2;
+        private DataGridView dataGridViewAlimentacao;
+        private Button buttonRecarregarHorario;
+        private Button buttonAdicionarHorairo;
+        private Button buttonRemoveHorario;
+        private DataGridViewTextBoxColumn ID_Column;
+        private DataGridViewTextBoxColumn Hora_Column;
+        private DataGridViewTextBoxColumn Minuto_Column;
+        private DataGridViewTextBoxColumn TempoVazao_Column;
+        private DataGridViewTextBoxColumn JaAlimentou_Column;
     }
 }

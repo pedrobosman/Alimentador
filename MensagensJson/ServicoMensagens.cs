@@ -48,7 +48,7 @@ namespace Alimentador.MensagensJson
             solicitar.Append(",\"tempo_vazao_ms\":");
             solicitar.Append(horario.TempoVazao);
             solicitar.Append(",\"ja_alimentou\":");
-            solicitar.Append(horario.JaAlimentou);
+            solicitar.Append((horario.JaAlimentou)?1:0);
             solicitar.Append("}");
             return solicitar.ToString();
         }
@@ -62,7 +62,15 @@ namespace Alimentador.MensagensJson
             solicitar.Append("}");
             return solicitar.ToString();
         }
-
+        public string ExcluirAlimentacaoId(int id)
+        {
+            //{"tipo_msg":11,"id":2}
+            StringBuilder solicitar = new StringBuilder();
+            solicitar.Append("{\"tipo_msg\":11,\"id\":");
+            solicitar.Append(id);
+            solicitar.Append("}");
+            return solicitar.ToString();
+        }
         public string DefinirHorarioAlimentador(HorarioAlimentador horario)
         {
             //{"tipo_msg":4,"hora":15,"minuto":22,"segundo":20}

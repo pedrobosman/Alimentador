@@ -14,7 +14,14 @@
 
   <ItemGroup>
     <None Remove="Recursos\aceso.png" />
+    <None Remove="Recursos\add.png" />
     <None Remove="Recursos\desligado.png" />
+    <None Remove="Recursos\reload.png" />
+    <None Remove="Recursos\remove.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Recursos\remove.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,8 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Recursos\aceso.png" />
-    <Resource Include="Recursos\desligado.png" />
+    <EmbeddedResource Include="Recursos\aceso.png" />
+    <EmbeddedResource Include="Recursos\add.png" />
+    <EmbeddedResource Include="Recursos\desligado.png" />
+    <EmbeddedResource Include="Recursos\reload.png" />
   </ItemGroup>
 
   <ItemGroup>

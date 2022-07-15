@@ -25,6 +25,7 @@ namespace Alimentador
         private void Portas_DropDown(object sender, EventArgs e)
         {
             comboBoxPortas.Items.Clear();
+            _portas.Clear();
             //string[] portas = SerialPort.GetPortNames();
             comboBoxPortas.Enabled = false;
             comboBoxPortas.Text = "Aguarde...";
@@ -74,8 +75,6 @@ namespace Alimentador
                     _serialPort.Open();
                     if (_serialPort.IsOpen)
                     {
-                        
-                        MessageBox.Show("Conectado!", "Alimentador", MessageBoxButtons.OK);
                         comboBoxPortas.Items.Clear();
                         this.Hide();
                         AlimentadorMain alimentador = new AlimentadorMain(_serialPort);

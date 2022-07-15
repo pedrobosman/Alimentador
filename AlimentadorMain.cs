@@ -9,11 +9,17 @@ namespace Alimentador
     {
         static SerialPort _serialPort;
 
-        private  ServicoMensagens _servicoMsgs;
+        private ServicoMensagens _servicoMsgs;
 
-        private bool _flagSliderAmbiente;
+        private bool _recarregar;
 
-        private bool _flagSliderLampada;
+        private bool[] _startGetValues = null;
+
+        private int NMaxHorariosAlimentacao;
+
+        private const int delayCOM = 200;
+
+        private static TimeSpan TimeOut = TimeSpan.FromMilliseconds(5000);
         public AlimentadorMain(SerialPort serialPort)
         {
             InitializeComponent();
@@ -22,12 +28,39 @@ namespace Alimentador
             _serialPort.ReadTimeout = 2000;
             _serialPort.WriteTimeout = 2000;
 
-            timerChecarConexao.Interval = 100;
-            timerChecarConexao.Start();
-            timerAtualizarDados.Interval = 500;
-            timerAtualizarDados.Start();
+            _startGetValues = new bool[2] { true, true };
             _servicoMsgs = new ServicoMensagens();
-            _flagSliderAmbiente = true;
+            _recarregar = false;
+            NMaxHorariosAlimentacao = 0;
+
+            timerChecarConexao.Interval = 100;
+            timerAtualizarDados.Interval = 1000;
+
+            timerChecarConexao.Start();
+        }
+
+        private async void AlimentadorMain_Load(object sender, EventArgs e)
+        {
+            //await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            buttonRecarregarHorario.Enabled = false;
+            for (int i = 0; i < 2; i++)
+            {
+                _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.MaxIDs));
+                await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            }
+
+            _recarregar = true;
+            await RecarregarHorarios().WaitAsync(TimeOut * 20);
+            _recarregar = false;
+            buttonRecarregarHorario.Enabled = true;
+
+            _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLed));
+            await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLdr));
+
+
+
+            timerAtualizarDados.Start();
         }
 
 
@@ -43,14 +76,10 @@ namespace Alimentador
 
         private void timerChecarConexao_Tick(object sender, EventArgs e)
         {
-            if (_serialPort.IsOpen)
+            if (!_serialPort.IsOpen)
             {
-                toolStripLabelStatus.Text = "Status Dispositivo:" + "Conectado";
-            }
-            else
-            {
-                toolStripLabelStatus.Text = "Status Dispositivo:" + "Desconectado";
                 timerChecarConexao.Stop();
+                _serialPort.Dispose();
                 Desconectado();
             }
         }
@@ -60,11 +89,9 @@ namespace Alimentador
             {
                 try
                 {
-                    if (_flagSliderLampada)
-                        _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLed));
-                    await Task.Delay(150);
-                    if (_flagSliderAmbiente)
-                        _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLdr));
+                    _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLed));
+                    await Task.Delay(delayCOM);
+                    _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLdr));
                 }
                 catch
                 {
@@ -79,7 +106,7 @@ namespace Alimentador
             }
         }
 
-        private void tratarSerialRecebido(string dadosRecebidos)
+        private async Task tratarSerialRecebido(string dadosRecebidos)
         {
             ServicoMensagens? servicoMensagens = new ServicoMensagens(dadosRecebidos);
             TIPODARESPOSTA? resposta = servicoMensagens.TipoMensagemRecebida();
@@ -94,19 +121,31 @@ namespace Alimentador
                         MessageBox.Show("Verifique o ID de alimentação!",
                             "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
+                    else
+                    {
+                        MessageBox.Show(erro.Mensagem,
+                            "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                     break;
                 case TIPODARESPOSTA.HORARIOALIMENTACAO:
-                    HorarioAlimentacao? horarioAlimentacao
+                    HorarioAlimentacao? hAlim
                         = servicoMensagens.RetornarValorDeJson<HorarioAlimentacao>();
-                    if (horarioAlimentacao == null) break;
-
-
+                    if (hAlim == null) break;
+                    if (_recarregar)
+                    {
+                        if (hAlim.ID == 0 || hAlim.ID > NMaxHorariosAlimentacao)
+                            break;
+                        dataGridViewAlimentacao.Rows.Add(
+                            hAlim.ID.ToString(), hAlim.Hora.ToString(),
+                            hAlim.Minuto.ToString(), (hAlim.TempoVazao / 1000).ToString("F"),
+                            (hAlim.JaAlimentou) ? "Sim" : "Não");
+                    }
                     break;
                 case TIPODARESPOSTA.NMAXID:
                     NMaxId? maxId =
                         servicoMensagens.RetornarValorDeJson<NMaxId>();
                     if (maxId == null) break;
-
+                    NMaxHorariosAlimentacao = maxId.Valor;
                     break;
                 case TIPODARESPOSTA.HORARIOALIMENTADOR:
                     HorarioAlimentador? horarioDispositivo =
@@ -117,13 +156,22 @@ namespace Alimentador
                 case TIPODARESPOSTA.TENSAOLDR:
                     StatusLdr? ldr_Status = servicoMensagens.RetornarValorDeJson<StatusLdr>();
                     if (ldr_Status == null) break;
-                    trackBarAmbiente.Value = (int)ldr_Status.LimiteAcionamento;
-                    labelPorcLuminosidade.Text = (100.00 - map(ldr_Status.TensaoLdr, 0, 5, 0, 100)).ToString("F") +" %";
+                    if (_startGetValues[1])
+                    {
+                        trackBarAmbiente.Value = (int)ldr_Status.LimiteAcionamento;
+                        _startGetValues[1] = false;
+                    }
+                    labelPorcLuminosidade.Text = (100.00 - map(ldr_Status.TensaoLdr, 0, 5, 0, 100)).ToString("F") + " %";
                     break;
                 case TIPODARESPOSTA.STATUSLED:
                     StatusLed? led_Status = servicoMensagens.RetornarValorDeJson<StatusLed>();
                     if (led_Status == null) break;
-                    trackBarPorcLampada.Value = led_Status.Porcentagem;
+                    if (_startGetValues[0])
+                    {
+                        trackBarPorcLampada.Value = (int)led_Status.Porcentagem;
+                        _startGetValues[0] = false;
+                    }
+                    //trackBarPorcLampada.Value = led_Status.Porcentagem;
                     if (led_Status.EstaLigado)
                     {
                         pictureBoxLampada.Image.Dispose();
@@ -140,7 +188,7 @@ namespace Alimentador
                     StatusAlimentador? statusAlimentador
                         = servicoMensagens.RetornarValorDeJson<StatusAlimentador>();
                     if (statusAlimentador == null) break;
-                    
+
                     break;
                 case TIPODARESPOSTA.MENSAGEMINVALIDA:
 
@@ -148,7 +196,7 @@ namespace Alimentador
                 default:
                     break;
             }
-            
+
         }
         private void _serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -156,8 +204,9 @@ namespace Alimentador
             SerialPort sp = (SerialPort)sender;
             dadosEntradaSerial = sp.ReadLine();
             EventHandler myEvent = (sender, e) => tratarSerialRecebido(dadosEntradaSerial);
-            try { 
-            this.Invoke(myEvent);
+            try
+            {
+                this.Invoke(myEvent);
             }
             catch
             {
@@ -170,40 +219,108 @@ namespace Alimentador
             return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
         }
 
-        private  void trackBarPorcLampada_MouseCaptureChanged(object sender, EventArgs e)
+        private void trackBarPorcLampada_MouseCaptureChanged(object sender, EventArgs e)
         {
-            _flagSliderLampada = false;
-
-            _serialPort.Write(_servicoMsgs.DefinirClaridadeLampada(trackBarPorcLampada.Value));
-            _flagSliderLampada = true;
+            _serialPort.WriteLine(_servicoMsgs.DefinirClaridadeLampada(trackBarPorcLampada.Value));
         }
 
-        private  void trackBarAmbiente_MouseCaptureChanged(object sender, EventArgs e)
+        private void trackBarAmbiente_MouseCaptureChanged(object sender, EventArgs e)
         {
-            _flagSliderAmbiente = false;
             //int tensaoLdr = (int)map(trackBarAmbiente.Value, 0, 100, 0, 4);
-            _serialPort.Write(_servicoMsgs.DefinirClaridadeAcionamentoLDR(trackBarAmbiente.Value));
-            _flagSliderAmbiente = true;
+            _serialPort.WriteLine(_servicoMsgs.DefinirClaridadeAcionamentoLDR(trackBarAmbiente.Value));
         }
 
-        private void trackBarPorcLampada_Scroll(object sender, EventArgs e)
+        private async void buttonAdicionarHorairo_Click(object sender, EventArgs e)
         {
-            _flagSliderLampada = false;
+            timerAtualizarDados.Stop();
+            for (int i = 0; i < 2; i++)
+            {
+                _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.MaxIDs));
+                await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            }
+            using (AdicionarHorario formulario_horario = new AdicionarHorario(NMaxHorariosAlimentacao))
+            {
+                if (formulario_horario.ShowDialog() == DialogResult.OK)
+                {
+                    if (formulario_horario.Horario != null)
+                        _serialPort.WriteLine(_servicoMsgs.DefinirHorarioAlimentacao(formulario_horario.Horario));
+                    await Task.Delay(delayCOM).WaitAsync(TimeOut);
+
+
+                    _recarregar = true;
+                    await RecarregarHorarios().WaitAsync(TimeOut * 20);
+                    _recarregar = false;
+                }
+
+            }
+            timerAtualizarDados.Start();
         }
 
-        private void trackBarPorcLampada_Enter(object sender, EventArgs e)
+        private async void buttonRecarregarHorario_Click(object sender, EventArgs e)
         {
-            _flagSliderLampada = false;
-        }
-        private void trackBarAmbiente_Scroll(object sender, EventArgs e)
-        {
-            _flagSliderAmbiente = false;
-        }
-        private void trackBarAmbiente_Enter(object sender, EventArgs e)
-        {
-            _flagSliderAmbiente = false;
+            RecarregarTaskBars();
+            buttonRecarregarHorario.Enabled = false;
+            timerAtualizarDados.Stop();
+            _recarregar = true;
+            await RecarregarHorarios().WaitAsync(TimeOut * 20);
+            _recarregar = false;
+            timerAtualizarDados.Start();
+            buttonRecarregarHorario.Enabled = true;
         }
 
-        
+        private void RecarregarTaskBars()
+        {
+            //Recupera valores atuais e reais dos taskbars
+            _startGetValues[0] = true;
+            _startGetValues[1] = true;
+        }
+        private async Task RecarregarHorarios()
+        {
+
+            for (int i = 0; i < 2; i++)
+            {
+                _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.MaxIDs));
+                await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            }
+
+            if (NMaxHorariosAlimentacao > 0)
+            {
+                dataGridViewAlimentacao.Rows.Clear();
+                for (int i = 1; i <= NMaxHorariosAlimentacao; i++)
+                {
+                    _serialPort.WriteLine(_servicoMsgs.SolicitarAlimentacaoId(i));
+                    await Task.Delay(delayCOM).WaitAsync(TimeOut);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Não Foi possível Recuperar Número de ID's",
+                            "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+        private async void buttonRemoveHorario_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow linha = dataGridViewAlimentacao.CurrentRow;
+            if (linha != null)
+            {
+                _serialPort.WriteLine(_servicoMsgs.ExcluirAlimentacaoId(Convert.ToInt32(linha.Cells[0].Value)));
+                await Task.Delay(delayCOM).WaitAsync(TimeOut);
+
+
+                _recarregar = true;
+                await RecarregarHorarios().WaitAsync(TimeOut * 20);
+                _recarregar = false;
+                
+            }
+            else
+            {
+                MessageBox.Show("Selecione um Horário!");
+            }
+            MessageBox.Show("Horário Excuído com Sucesso!");
+
+        }
+
+
     }
 }
