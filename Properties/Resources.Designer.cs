@@ -83,9 +83,29 @@ namespace Alimentador.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Conectar {
+            get {
+                object obj = ResourceManager.GetObject("Conectar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap desligado {
             get {
                 object obj = ResourceManager.GetObject("desligado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dogBowl {
+            get {
+                object obj = ResourceManager.GetObject("dogBowl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

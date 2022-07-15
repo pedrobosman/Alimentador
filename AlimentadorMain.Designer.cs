@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlimentadorMain));
             this.timerAtualizarDados = new System.Windows.Forms.Timer(this.components);
             this.timerChecarConexao = new System.Windows.Forms.Timer(this.components);
             this.groupBoxIlumincacao = new System.Windows.Forms.GroupBox();
@@ -51,7 +52,6 @@
             this.statusLedBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonRemoveHorario = new System.Windows.Forms.Button();
-            this.buttonRecarregarHorario = new System.Windows.Forms.Button();
             this.buttonAdicionarHorairo = new System.Windows.Forms.Button();
             this.dataGridViewAlimentacao = new System.Windows.Forms.DataGridView();
             this.ID_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +59,7 @@
             this.Minuto_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TempoVazao_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.JaAlimentou_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonRecarregarHorario = new System.Windows.Forms.Button();
             this.groupBoxIlumincacao.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLampada)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiente)).BeginInit();
@@ -94,6 +95,7 @@
             this.groupBoxIlumincacao.Controls.Add(this.label1);
             this.groupBoxIlumincacao.Controls.Add(this.trackBarPorcLampada);
             this.groupBoxIlumincacao.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBoxIlumincacao.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBoxIlumincacao.Location = new System.Drawing.Point(12, 12);
             this.groupBoxIlumincacao.Name = "groupBoxIlumincacao";
             this.groupBoxIlumincacao.Size = new System.Drawing.Size(424, 298);
@@ -104,9 +106,9 @@
             // labelPorcLuminosidade
             // 
             this.labelPorcLuminosidade.AutoSize = true;
-            this.labelPorcLuminosidade.Location = new System.Drawing.Point(327, 192);
+            this.labelPorcLuminosidade.Location = new System.Drawing.Point(327, 207);
             this.labelPorcLuminosidade.Name = "labelPorcLuminosidade";
-            this.labelPorcLuminosidade.Size = new System.Drawing.Size(26, 15);
+            this.labelPorcLuminosidade.Size = new System.Drawing.Size(33, 20);
             this.labelPorcLuminosidade.TabIndex = 14;
             this.labelPorcLuminosidade.Text = "0 %";
             // 
@@ -115,15 +117,15 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(336, 192);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(0, 15);
+            this.label5.Size = new System.Drawing.Size(0, 20);
             this.label5.TabIndex = 13;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(309, 163);
+            this.label10.Location = new System.Drawing.Point(309, 178);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(85, 15);
+            this.label10.Size = new System.Drawing.Size(105, 20);
             this.label10.TabIndex = 12;
             this.label10.Text = "Luminosidade:";
             // 
@@ -132,7 +134,7 @@
             this.pictureBoxLampada.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBoxLampada.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxLampada.Image = global::Alimentador.Properties.Resources.aceso;
-            this.pictureBoxLampada.Location = new System.Drawing.Point(309, 22);
+            this.pictureBoxLampada.Location = new System.Drawing.Point(305, 30);
             this.pictureBoxLampada.Name = "pictureBoxLampada";
             this.pictureBoxLampada.Size = new System.Drawing.Size(109, 109);
             this.pictureBoxLampada.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -144,7 +146,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(210, 107);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 15);
+            this.label9.Size = new System.Drawing.Size(45, 20);
             this.label9.TabIndex = 10;
             this.label9.Text = "100%";
             // 
@@ -153,16 +155,16 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(25, 107);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 15);
+            this.label8.Size = new System.Drawing.Size(29, 20);
             this.label8.TabIndex = 9;
             this.label8.Text = "0%";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 59);
+            this.label7.Location = new System.Drawing.Point(25, 66);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(103, 15);
+            this.label7.Size = new System.Drawing.Size(128, 20);
             this.label7.TabIndex = 8;
             this.label7.Text = "Luminosidade (%)";
             // 
@@ -171,7 +173,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(212, 211);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 15);
+            this.label6.Size = new System.Drawing.Size(46, 20);
             this.label6.TabIndex = 7;
             this.label6.Text = "Noite";
             // 
@@ -180,23 +182,23 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(31, 211);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 15);
+            this.label4.Size = new System.Drawing.Size(32, 20);
             this.label4.TabIndex = 5;
             this.label4.Text = "Dia";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 163);
+            this.label3.Location = new System.Drawing.Point(25, 178);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(167, 15);
+            this.label3.Size = new System.Drawing.Size(209, 20);
             this.label3.TabIndex = 4;
             this.label3.Text = "Quando Iluminar o Ambiente?";
             // 
             // trackBarAmbiente
             // 
             this.trackBarAmbiente.LargeChange = 1;
-            this.trackBarAmbiente.Location = new System.Drawing.Point(31, 181);
+            this.trackBarAmbiente.Location = new System.Drawing.Point(31, 196);
             this.trackBarAmbiente.Maximum = 5;
             this.trackBarAmbiente.Name = "trackBarAmbiente";
             this.trackBarAmbiente.Size = new System.Drawing.Size(217, 45);
@@ -207,18 +209,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 137);
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(31, 146);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 15);
+            this.label2.Size = new System.Drawing.Size(85, 21);
             this.label2.TabIndex = 2;
             this.label2.Text = "Ambiente";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(31, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 15);
+            this.label1.Size = new System.Drawing.Size(80, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "Lâmpada";
             // 
@@ -226,7 +230,7 @@
             // 
             this.trackBarPorcLampada.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.statusLedBindingSource, "Porcentagem", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.trackBarPorcLampada.LargeChange = 20;
-            this.trackBarPorcLampada.Location = new System.Drawing.Point(25, 77);
+            this.trackBarPorcLampada.Location = new System.Drawing.Point(25, 84);
             this.trackBarPorcLampada.Maximum = 100;
             this.trackBarPorcLampada.Name = "trackBarPorcLampada";
             this.trackBarPorcLampada.Size = new System.Drawing.Size(223, 45);
@@ -244,6 +248,7 @@
             this.groupBox2.Controls.Add(this.buttonRemoveHorario);
             this.groupBox2.Controls.Add(this.buttonAdicionarHorairo);
             this.groupBox2.Controls.Add(this.dataGridViewAlimentacao);
+            this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(442, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(570, 298);
@@ -261,18 +266,6 @@
             this.buttonRemoveHorario.TabIndex = 3;
             this.buttonRemoveHorario.UseVisualStyleBackColor = true;
             this.buttonRemoveHorario.Click += new System.EventHandler(this.buttonRemoveHorario_Click);
-            // 
-            // buttonRecarregarHorario
-            // 
-            this.buttonRecarregarHorario.BackgroundImage = global::Alimentador.Properties.Resources.reload;
-            this.buttonRecarregarHorario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRecarregarHorario.Location = new System.Drawing.Point(957, 345);
-            this.buttonRecarregarHorario.Name = "buttonRecarregarHorario";
-            this.buttonRecarregarHorario.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.buttonRecarregarHorario.Size = new System.Drawing.Size(40, 40);
-            this.buttonRecarregarHorario.TabIndex = 2;
-            this.buttonRecarregarHorario.UseVisualStyleBackColor = true;
-            this.buttonRecarregarHorario.Click += new System.EventHandler(this.buttonRecarregarHorario_Click);
             // 
             // buttonAdicionarHorairo
             // 
@@ -296,7 +289,7 @@
             this.dataGridViewAlimentacao.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -311,7 +304,7 @@
             this.JaAlimentou_Column});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -354,6 +347,18 @@
             this.JaAlimentou_Column.Name = "JaAlimentou_Column";
             this.JaAlimentou_Column.ReadOnly = true;
             // 
+            // buttonRecarregarHorario
+            // 
+            this.buttonRecarregarHorario.BackgroundImage = global::Alimentador.Properties.Resources.reload;
+            this.buttonRecarregarHorario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonRecarregarHorario.Location = new System.Drawing.Point(957, 345);
+            this.buttonRecarregarHorario.Name = "buttonRecarregarHorario";
+            this.buttonRecarregarHorario.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.buttonRecarregarHorario.Size = new System.Drawing.Size(40, 40);
+            this.buttonRecarregarHorario.TabIndex = 2;
+            this.buttonRecarregarHorario.UseVisualStyleBackColor = true;
+            this.buttonRecarregarHorario.Click += new System.EventHandler(this.buttonRecarregarHorario_Click);
+            // 
             // AlimentadorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -364,9 +369,10 @@
             this.Controls.Add(this.buttonRecarregarHorario);
             this.Controls.Add(this.groupBoxIlumincacao);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AlimentadorMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " ";
+            this.Text = " Alimentador";
             this.Load += new System.EventHandler(this.AlimentadorMain_Load);
             this.groupBoxIlumincacao.ResumeLayout(false);
             this.groupBoxIlumincacao.PerformLayout();
