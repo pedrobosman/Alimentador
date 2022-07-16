@@ -60,6 +60,9 @@
             this.TempoVazao_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.JaAlimentou_Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonRecarregarHorario = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.buttonSync = new System.Windows.Forms.Button();
+            this.labelHorarioDisp = new System.Windows.Forms.Label();
             this.groupBoxIlumincacao.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLampada)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiente)).BeginInit();
@@ -84,21 +87,21 @@
             this.groupBoxIlumincacao.Controls.Add(this.label5);
             this.groupBoxIlumincacao.Controls.Add(this.label10);
             this.groupBoxIlumincacao.Controls.Add(this.pictureBoxLampada);
-            this.groupBoxIlumincacao.Controls.Add(this.label9);
             this.groupBoxIlumincacao.Controls.Add(this.label8);
             this.groupBoxIlumincacao.Controls.Add(this.label7);
-            this.groupBoxIlumincacao.Controls.Add(this.label6);
-            this.groupBoxIlumincacao.Controls.Add(this.label4);
             this.groupBoxIlumincacao.Controls.Add(this.label3);
-            this.groupBoxIlumincacao.Controls.Add(this.trackBarAmbiente);
             this.groupBoxIlumincacao.Controls.Add(this.label2);
             this.groupBoxIlumincacao.Controls.Add(this.label1);
+            this.groupBoxIlumincacao.Controls.Add(this.label4);
+            this.groupBoxIlumincacao.Controls.Add(this.label6);
+            this.groupBoxIlumincacao.Controls.Add(this.label9);
             this.groupBoxIlumincacao.Controls.Add(this.trackBarPorcLampada);
+            this.groupBoxIlumincacao.Controls.Add(this.trackBarAmbiente);
             this.groupBoxIlumincacao.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBoxIlumincacao.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBoxIlumincacao.Location = new System.Drawing.Point(12, 12);
             this.groupBoxIlumincacao.Name = "groupBoxIlumincacao";
-            this.groupBoxIlumincacao.Size = new System.Drawing.Size(424, 298);
+            this.groupBoxIlumincacao.Size = new System.Drawing.Size(424, 305);
             this.groupBoxIlumincacao.TabIndex = 1;
             this.groupBoxIlumincacao.TabStop = false;
             this.groupBoxIlumincacao.Text = "Iluminação";
@@ -171,7 +174,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(212, 211);
+            this.label6.Location = new System.Drawing.Point(210, 221);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 20);
             this.label6.TabIndex = 7;
@@ -180,7 +183,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(31, 211);
+            this.label4.Location = new System.Drawing.Point(31, 221);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 20);
             this.label4.TabIndex = 5;
@@ -245,13 +248,16 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.labelHorarioDisp);
+            this.groupBox2.Controls.Add(this.buttonSync);
+            this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.buttonRemoveHorario);
             this.groupBox2.Controls.Add(this.buttonAdicionarHorairo);
             this.groupBox2.Controls.Add(this.dataGridViewAlimentacao);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(442, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(570, 298);
+            this.groupBox2.Size = new System.Drawing.Size(570, 305);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Horários de Alimentação";
@@ -351,7 +357,7 @@
             // 
             this.buttonRecarregarHorario.BackgroundImage = global::Alimentador.Properties.Resources.reload;
             this.buttonRecarregarHorario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRecarregarHorario.Location = new System.Drawing.Point(957, 345);
+            this.buttonRecarregarHorario.Location = new System.Drawing.Point(957, 323);
             this.buttonRecarregarHorario.Name = "buttonRecarregarHorario";
             this.buttonRecarregarHorario.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.buttonRecarregarHorario.Size = new System.Drawing.Size(40, 40);
@@ -359,12 +365,42 @@
             this.buttonRecarregarHorario.UseVisualStyleBackColor = true;
             this.buttonRecarregarHorario.Click += new System.EventHandler(this.buttonRecarregarHorario_Click);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(6, 238);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(181, 20);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Horário do Alimentador:";
+            // 
+            // buttonSync
+            // 
+            this.buttonSync.BackgroundImage = global::Alimentador.Properties.Resources.Time;
+            this.buttonSync.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonSync.Location = new System.Drawing.Point(6, 256);
+            this.buttonSync.Name = "buttonSync";
+            this.buttonSync.Size = new System.Drawing.Size(67, 43);
+            this.buttonSync.TabIndex = 4;
+            this.buttonSync.UseVisualStyleBackColor = true;
+            this.buttonSync.Click += new System.EventHandler(this.buttonSync_Click);
+            // 
+            // labelHorarioDisp
+            // 
+            this.labelHorarioDisp.AutoSize = true;
+            this.labelHorarioDisp.Location = new System.Drawing.Point(193, 238);
+            this.labelHorarioDisp.Name = "labelHorarioDisp";
+            this.labelHorarioDisp.Size = new System.Drawing.Size(44, 20);
+            this.labelHorarioDisp.TabIndex = 5;
+            this.labelHorarioDisp.Text = "00:00";
+            // 
             // AlimentadorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1009, 397);
+            this.ClientSize = new System.Drawing.Size(1009, 368);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.buttonRecarregarHorario);
             this.Controls.Add(this.groupBoxIlumincacao);
@@ -381,6 +417,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPorcLampada)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusLedBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAlimentacao)).EndInit();
             this.ResumeLayout(false);
 
@@ -418,5 +455,8 @@
         private DataGridViewTextBoxColumn Minuto_Column;
         private DataGridViewTextBoxColumn TempoVazao_Column;
         private DataGridViewTextBoxColumn JaAlimentou_Column;
+        private Label labelHorarioDisp;
+        private Button buttonSync;
+        private Label label11;
     }
 }

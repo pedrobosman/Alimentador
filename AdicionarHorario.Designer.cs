@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdicionarHorario));
             this.comboBoxID = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -100,7 +101,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.BackgroundImage = global::Alimentador.Properties.Resources.remove;
+            this.buttonCancel.BackgroundImage = global::Alimentador.Properties.Resources.Cancel;
             this.buttonCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCancel.Location = new System.Drawing.Point(115, 161);
             this.buttonCancel.Name = "buttonCancel";
@@ -185,6 +186,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxID);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AdicionarHorario";

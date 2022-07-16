@@ -15,19 +15,23 @@
   <ItemGroup>
     <None Remove="Recursos\aceso.png" />
     <None Remove="Recursos\add.png" />
+    <None Remove="Recursos\Cancel.png" />
     <None Remove="Recursos\Conectar.png" />
     <None Remove="Recursos\desligado.png" />
     <None Remove="Recursos\dogBowl.ico" />
     <None Remove="Recursos\dogBowl.png" />
     <None Remove="Recursos\reload.png" />
     <None Remove="Recursos\remove.png" />
+    <None Remove="Recursos\Time.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Recursos\Cancel.png" />
     <EmbeddedResource Include="Recursos\Conectar.png" />
     <EmbeddedResource Include="Recursos\dogBowl.ico" />
     <EmbeddedResource Include="Recursos\dogBowl.png" />
     <EmbeddedResource Include="Recursos\remove.png" />
+    <EmbeddedResource Include="Recursos\Time.png" />
   </ItemGroup>
 
   <ItemGroup>

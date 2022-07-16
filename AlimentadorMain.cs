@@ -17,7 +17,7 @@ namespace Alimentador
 
         private int NMaxHorariosAlimentacao;
 
-        private const int delayCOM = 200;
+        private const int delayCOM = 50;
 
         private static TimeSpan TimeOut = TimeSpan.FromMilliseconds(5000);
         public AlimentadorMain(SerialPort serialPort)
@@ -79,6 +79,7 @@ namespace Alimentador
             if (!_serialPort.IsOpen)
             {
                 timerChecarConexao.Stop();
+                timerAtualizarDados.Stop();
                 _serialPort.Dispose();
                 Desconectado();
             }
@@ -92,6 +93,9 @@ namespace Alimentador
                     _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLed));
                     await Task.Delay(delayCOM);
                     _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.StatusLdr));
+                    await Task.Delay(delayCOM);
+                    _serialPort.WriteLine(_servicoMsgs.Solicitar(SOLICITACAOSIMPLES.HorarioAlimentador));
+                    await Task.Delay(delayCOM);
                 }
                 catch
                 {
@@ -151,6 +155,7 @@ namespace Alimentador
                     HorarioAlimentador? horarioDispositivo =
                         servicoMensagens.RetornarValorDeJson<HorarioAlimentador>();
                     if (horarioDispositivo == null) break;
+                    labelHorarioDisp.Text = horarioDispositivo.Hora.ToString("00")+":"+horarioDispositivo.Minuto.ToString("00");
 
                     break;
                 case TIPODARESPOSTA.TENSAOLDR:
@@ -250,6 +255,11 @@ namespace Alimentador
                     _recarregar = true;
                     await RecarregarHorarios().WaitAsync(TimeOut * 20);
                     _recarregar = false;
+                }else if (formulario_horario.ShowDialog() == DialogResult.Cancel)
+                {
+                    _recarregar = true;
+                    await RecarregarHorarios().WaitAsync(TimeOut * 20);
+                    _recarregar = false;
                 }
 
             }
@@ -321,6 +331,20 @@ namespace Alimentador
 
         }
 
-
+        private async void buttonSync_Click(object sender, EventArgs e)
+        {
+            timerAtualizarDados.Stop();
+            DateTime agora = DateTime.Now;
+            HorarioAlimentador horario = new HorarioAlimentador()
+            {
+                 Hora = agora.Hour,
+                 Minuto = agora.Minute,
+                 Segundo = agora.Second
+            };
+            _serialPort.WriteLine(_servicoMsgs.DefinirHorarioAlimentador(horario));
+            await Task.Delay(delayCOM).WaitAsync(TimeOut);
+            timerAtualizarDados.Start();
+            
+        }
     }
 }
